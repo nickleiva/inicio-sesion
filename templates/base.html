@@ -1,0 +1,38 @@
+{% load static %}
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Task</title>
+    <link rel="stylesheet" href="{% static 'tasks/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'tasks/css/style.css' %}">
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <!-- ここから -->
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'tasks:index' %}">Lista blog</a></li>
+        <li><a href="{% url 'user_detail' user.pk %}">Información de miembro</a></li>    <!-- 追記 -->
+        <li><form id="logoutForm" method="post" action="{% url 'logout' %}" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer; color: white; margin-top: 13px;">Cerrar sesión</button>
+      </form></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Iniciar sesion</a></li>
+        <li><a href="{% url 'signup' %}">Registro</a></li>
+        {% endif %}
+        <!-- ここまで -->
+      </ul>
+    </nav>
+    <main>
+      <div>
+        {% block main %}
+        {% endblock %}
+      </div>
+    </main>
+  </body>
+
+</html>
